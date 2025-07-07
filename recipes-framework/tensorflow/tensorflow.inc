@@ -27,8 +27,6 @@ SRC_URI = "git://github.com/tensorflow/tensorflow.git;branch=r2.19;protocol=http
     file://0001-do-not-patch-.so-files-for-linux.patch \
 "
 
-S = "${WORKDIR}/git"
-
 DEPENDS += " \
     python3 \
     python3-requests-native \
