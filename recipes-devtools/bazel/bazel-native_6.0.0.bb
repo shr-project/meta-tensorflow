@@ -5,7 +5,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 SRC_URI[md5sum] = "f79f57d82795b591e95f9f7fa0f9a8da"
 SRC_URI[sha256sum] = "7bc0c5145c19a56d82a08fce6908c5e1a0e75e4fbfb3b6f12b4deae7f4b38cbc"
 
-SRC_URI = "https://github.com/bazelbuild/bazel/releases/download/${PV}/bazel-${PV}-dist.zip \
+# bazel-${PV}-dist.zip doesn't have top-level directory, use subdir
+SRC_URI = "https://github.com/bazelbuild/bazel/releases/download/${PV}/bazel-${PV}-dist.zip;subdir=${BP} \
            file://0001-HttpDownloader-save-download-tarball-to-distdir.patch \
            file://0001-fix-unzip-command-not-found.patch \
            file://0001-add-Yocto-native-sysroot-dir-to-the-default-Bazel-to.patch \
@@ -24,9 +25,6 @@ DEPENDS = "coreutils-native \
            zip-native \
            openjdk-11-native \
           "
-
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
 
 inherit bazel-base
 
