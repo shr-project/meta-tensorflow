@@ -29,11 +29,20 @@ S = "${UNPACKDIR}"
 
 inherit bazel-base
 
+EXTRA_BAZEL_ARGS2 = " \
+"
 EXTRA_BAZEL_ARGS = " \
     --tool_java_runtime_version=local_jdk \
     --python_path=python3 \
     --distdir=${TS_DL_DIR} \
     --color=no \
+    --subcommands \
+    --subcommands=pretty_print \
+    --explain=/tmp/bazel-24.04.txt \
+    --terminal_columns=0 \
+    --isatty=0 \
+    --noshow_progress \
+    --noshow_loading_progress \
     ${@oe.utils.conditional("BAZEL_JOBS", "", "", "--jobs=${BAZEL_JOBS}", d )} \
     ${@oe.utils.conditional("BAZEL_JOBS", "", "", "--local_resources=cpu=${BAZEL_JOBS}", d )} \
     ${@oe.utils.conditional("BAZEL_MEM", "", "", "--local_resources=memory=${BAZEL_MEM}", d )} \
@@ -46,6 +55,7 @@ do_compile () {
     VERBOSE=yes \
     EXTRA_BAZEL_ARGS="${EXTRA_BAZEL_ARGS}" \
     ./compile.sh
+    sed -i 's/--isatty=1/--isatty=0/g' ${S}/scripts/bootstrap/compile.sh
 }
 
 do_install () {
